@@ -1,0 +1,8 @@
+bin/*
+
+obj/**/*.o
+obj/**/*.d
+obj/**/*.a
+
+lists/*
+!lists/Default.txt
