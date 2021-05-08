@@ -1,5 +1,7 @@
 #include "menu.h"
 
+#include "print_lists.h"
+
 #include <stdlib.h>
 
 void list_menu()
@@ -10,8 +12,8 @@ void list_menu()
     do {
         system("clear");
 
-        // print_lists();
-        printf("1. Create list\n");
+        print_lists();
+        printf("\n1. Create list\n");
         printf("2. Select list\n");
         printf("3. Exit the program\n\n");
 
@@ -38,7 +40,7 @@ void select_list(selected_list* sl)
 
     unsigned int select;
 
-    // print_lists();
+    print_lists();
     // do {
     scanf("%d", &select);
     //} while (get_list(select, sl));
