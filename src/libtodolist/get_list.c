@@ -16,7 +16,7 @@ size_t get_list(size_t select, selected_list* sl)
     }
     if (select <= telldir(dir) - 2 && select > 0) {
         if (select == 1) {
-            strcpy(sl->name_list, "Default");
+            strcpy(sl->name_list, "Default.txt");
         } else {
             seekdir(dir, select);
             dp = readdir(dir);
@@ -24,8 +24,8 @@ size_t get_list(size_t select, selected_list* sl)
                 dp = readdir(dir);
             }
             char* dotp = strchr(dp->d_name, '.');
-            strncpy(sl->name_list, dp->d_name, dotp - dp->d_name);
-            sl->name_list[dotp - dp->d_name] = '\0';
+            strncpy(sl->name_list, dp->d_name, dotp - dp->d_name + 4);
+            sl->name_list[dotp - dp->d_name + 4] = '\0';
         }
         closedir(dir);
         return 0;
