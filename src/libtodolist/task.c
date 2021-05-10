@@ -20,3 +20,13 @@ void create_task(selected_list* sl, FILE* file)
     printf("%d.", number_task);*/
     fwrite(sl->name_task, sizeof(char), 151, file);
 }
+int search_last_task(selected_list* sl, FILE* file)
+{
+    int number_last_task = 0;
+    fseek(file, 0, SEEK_SET);
+    while (!feof(file)) {
+        fgets(sl->name_task, 150, file);
+        number_last_task++;
+    }
+    return number_last_task;
+}
