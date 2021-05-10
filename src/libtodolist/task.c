@@ -30,3 +30,27 @@ int search_last_task(selected_list* sl, FILE* file)
     }
     return number_last_task;
 }
+void delete_task(selected_list* sl, FILE* file)
+{
+    int number_delete_task;
+    unsigned int select;
+    int number_last_task = search_last_task(sl, file);
+    printf("Select the task you want to delete:");
+    scanf("%d\n\n", &number_delete_task);
+    int bytes_to_delit = (number_delete_task)*150;
+    fseek(file, bytes_to_delit, SEEK_SET);
+    if (number_delete_task <= number_last_task) {
+        printf("Are you sure you want to delete the task?\nIf you agree press "
+               "Y, if not press N");
+        scanf("%d", &select);
+        switch (select) {
+        case 'Y':
+            sl->name_task[0] = 0;
+            break;
+        case 'N':
+            break;
+        }
+    } else {
+        printf("The task you entered does not exist");
+    }
+}
