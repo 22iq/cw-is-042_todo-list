@@ -1,6 +1,7 @@
 #pragma once
 
 #include "selected_list_type.h"
+#include "task.h"
 #include <stdio.h>
 
 void list_menu();
