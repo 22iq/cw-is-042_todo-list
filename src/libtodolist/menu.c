@@ -1,22 +1,25 @@
 #include "menu.h"
 
+#include "get_list.h"
+#include "print_lists.h"
+
 #include <stdlib.h>
 
 void list_menu()
 {
     selected_list sl;
-    unsigned int select;
+    size_t select;
 
     do {
         system("clear");
 
-        // print_lists();
-        printf("1. Create list\n");
+        print_lists();
+        printf("\n1. Create list\n");
         printf("2. Select list\n");
         printf("3. Exit the program\n\n");
 
         do {
-            scanf("%d", &select);
+            scanf("%lu", &select);
         } while (select == 0 || select > 3);
 
         switch (select) {
@@ -36,12 +39,12 @@ void select_list(selected_list* sl)
 {
     system("clear");
 
-    unsigned int select;
+    size_t select;
 
-    // print_lists();
-    // do {
-    scanf("%d", &select);
-    //} while (get_list(select, sl));
+    print_lists();
+    do {
+        scanf("%lu", &select);
+    } while (get_list(select, sl));
     choose_action_list(sl);
 }
 
@@ -49,7 +52,7 @@ void choose_action_list(selected_list* sl)
 {
     system("clear");
 
-    unsigned int select;
+    size_t select;
 
     // printf selected list
     printf("1. Delete list\n");
@@ -58,7 +61,7 @@ void choose_action_list(selected_list* sl)
     printf("4. Back\n\n");
 
     do {
-        scanf("%d", &select);
+        scanf("%lu", &select);
     } while (select == 0 || select > 4);
 
     switch (select) {
@@ -77,7 +80,7 @@ void choose_action_list(selected_list* sl)
 
 void open_list(selected_list* sl)
 {
-    unsigned int select;
+    size_t select;
     // fopen file .txt
 
     do {
@@ -92,7 +95,7 @@ void open_list(selected_list* sl)
         printf("3. Back\n\n");
 
         do {
-            scanf("%d", &select);
+            scanf("%lu", &select);
         } while (select == 0 || select > 3);
 
         switch (select) {
@@ -113,11 +116,11 @@ void select_task(selected_list* sl, FILE* file)
 {
     system("clear");
 
-    unsigned int select;
+    size_t select;
 
     // print_tasks();
     // do {
-    scanf("%d", &select);
+    scanf("%lu", &select);
     //} while (get_task(select, sl));
     choose_action_task(sl, file);
 }
@@ -126,7 +129,7 @@ void choose_action_task(selected_list* sl, FILE* file)
 {
     system("clear");
 
-    unsigned int select;
+    size_t select;
 
     // printf selected task
     printf("1. Delete task\n");
@@ -137,7 +140,7 @@ void choose_action_task(selected_list* sl, FILE* file)
     printf("4. Back\n\n");
 
     do {
-        scanf("%d", &select);
+        scanf("%lu", &select);
     } while (select == 0 || select > 4);
 
     switch (select) {
