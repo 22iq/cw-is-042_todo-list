@@ -1,18 +1,11 @@
 #include "print_tasks.h"
 
 #include <stdio.h>
-#include <string.h>
 
-void print_tasks(selected_list* sl)
+void print_tasks(selected_list* sl, FILE* list)
 {
     size_t bytes = sizeof(sl->name_task) - 2 * sizeof(char);
     size_t count = 1, j;
-
-    // get full path
-    char path[44] = "./lists/";
-    strcat(path, sl->name_list);
-
-    FILE* list = fopen(path, "r");
 
     // get n tasks
     fseek(list, 0, SEEK_END);
@@ -27,5 +20,5 @@ void print_tasks(selected_list* sl)
         printf("%lu. %c|%s\n", count++, sl->name_task[0], &sl->name_task[1]);
         sl->name_task[j] = '~';
     }
-    fclose(list);
+    rewind(list);
 }

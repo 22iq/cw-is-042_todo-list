@@ -5,6 +5,7 @@
 #include "print_tasks.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 void list_menu()
 {
@@ -82,14 +83,19 @@ void choose_action_list(selected_list* sl)
 void open_list(selected_list* sl)
 {
     size_t select;
-    // fopen file .txt
+
+    // get full path
+    char path[44] = "./lists/";
+    strcat(path, sl->name_list);
+
+    FILE* list = fopen(path, "r");
 
     do {
         system("clear");
 
         // printf selected list
         // print_tasks(); or printf todolist is empty
-        print_tasks(sl);
+        print_tasks(sl, list);
         printf("1. Create task\n");
 
         // unused if todolist is empty
