@@ -1,5 +1,6 @@
 #include "menu.h"
 
+#include "completed_task.h"
 #include "get_list.h"
 #include "get_task.h"
 #include "print_lists.h"
@@ -139,10 +140,10 @@ void select_task(selected_list* sl, FILE* list)
     do {
         scanf("%lu", &select);
     } while (get_task(select, sl, list));
-    choose_action_task(sl, list);
+    choose_action_task(sl, list, select);
 }
 
-void choose_action_task(selected_list* sl, FILE* list)
+void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
 {
     system("clear");
 
@@ -168,7 +169,7 @@ void choose_action_task(selected_list* sl, FILE* list)
         // edit_task(sl, list);
         break;
     case 3:
-        // completed_task(sl, list);
+        completed_task(sl, list, number_task);
     case 4:
         return;
     }
