@@ -2,6 +2,7 @@
 
 #include "get_list.h"
 #include "print_lists.h"
+#include "print_tasks.h"
 
 #include <stdlib.h>
 
@@ -88,6 +89,7 @@ void open_list(selected_list* sl)
 
         // printf selected list
         // print_tasks(); or printf todolist is empty
+        print_tasks(sl);
         printf("1. Create task\n");
 
         // unused if todolist is empty
