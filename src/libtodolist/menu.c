@@ -88,30 +88,37 @@ void open_list(selected_list* sl)
     char path[44] = "./lists/";
     strcat(path, sl->name_list);
 
-    FILE* list = fopen(path, "r");
+    FILE* list = fopen(path, "r+");
 
     do {
         system("clear");
 
-        print_selected_list(sl);
+        size_t count = 1;
+        size_t list_is_empty = 0;
 
-        // print_tasks(); or printf todolist is empty
-        print_tasks(sl, list);
-        printf("\n1. Create task\n");
+        print_selected_list(sl);
+        print_tasks(sl, list, &list_is_empty);
+        printf("\n%lu. Create task\n", count++);
 
         // unused if todolist is empty
-        printf("2. Select task\n");
-        printf("3. Back\n\n");
+        if (!list_is_empty) {
+            printf("%lu. Select task\n", count++);
+        }
+        printf("%lu. Back\n\n", count);
 
         do {
             scanf("%lu", &select);
-        } while (select == 0 || select > 3);
+        } while (select == 0 || select > count);
 
         switch (select) {
         case 1:
             // create_task(sl, list);
             break;
         case 2:
+            if (list_is_empty) {
+                fclose(list);
+                return;
+            }
             // select_task(sl, list);
             break;
         case 3:
