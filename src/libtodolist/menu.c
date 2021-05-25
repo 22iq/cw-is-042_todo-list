@@ -1,5 +1,6 @@
 #include "menu.h"
 
+#include "check_action.h"
 #include "completed_task.h"
 #include "get_list.h"
 #include "get_task.h"
@@ -28,7 +29,9 @@ void list_menu()
 
         switch (select) {
         case 1:
-            // create_list(sl);
+            if (!check_action("create list")) {
+                // create_list(sl);
+            }
             break;
         case 2:
             select_list(&sl);
@@ -70,10 +73,14 @@ void choose_action_list(selected_list* sl)
 
     switch (select) {
     case 1:
-        // delete_list(sl);
+        if (!check_action("delete list")) {
+            // delete_list(sl);
+        }
         break;
     case 2:
-        // rename_list(sl);
+        if (!check_action("rename list")) {
+            // rename_list(sl);
+        }
         break;
     case 3:
         open_list(sl);
@@ -114,7 +121,9 @@ void open_list(selected_list* sl)
 
         switch (select) {
         case 1:
-            // create_task(sl, list);
+            if (!check_action("create task")) {
+                // create_task(sl, list);
+            }
             break;
         case 2:
             if (list_is_empty) {
@@ -165,16 +174,22 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
 
     switch (select) {
     case 1:
-        // delete_task(sl, list);
+        if (!check_action("delete task")) {
+            // delete_task(sl, list);
+        }
         break;
     case 2:
         if (sl->name_task[0] == 'O') {
             return;
         }
-        // edit_task(sl, list);
+        if (!check_action("edit task")) {
+            // edit_task(sl, list);
+        }
         break;
     case 3:
-        completed_task(sl, list, number_task);
+        if (!check_action("mark task as completed")) {
+            completed_task(sl, list, number_task);
+        }
     case 4:
         return;
     }
