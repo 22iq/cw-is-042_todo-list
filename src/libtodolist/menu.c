@@ -147,25 +147,30 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
 {
     system("clear");
 
-    size_t select;
+    size_t select, count = 1;
 
     print_selected_task(sl);
-    printf("1. Delete task\n");
+    printf("%lu. Delete task\n", count++);
 
     // unused if task is completed
-    printf("2. Edit task\n");
-    printf("3. Mark task as completed\n");
-    printf("4. Back\n\n");
+    if (sl->name_task[0] == 'X') {
+        printf("%lu. Edit task\n", count++);
+        printf("%lu. Mark task as completed\n", count++);
+    }
+    printf("%lu. Back\n\n", count);
 
     do {
         scanf("%lu", &select);
-    } while (select == 0 || select > 4);
+    } while (select == 0 || select > count);
 
     switch (select) {
     case 1:
         // delete_task(sl, list);
         break;
     case 2:
+        if (sl->name_task[0] == 'O') {
+            return;
+        }
         // edit_task(sl, list);
         break;
     case 3:
