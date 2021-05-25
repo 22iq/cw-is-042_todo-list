@@ -26,3 +26,13 @@ void print_tasks(selected_list* sl, FILE* list, size_t* list_is_empty)
     }
     rewind(list);
 }
+
+void print_selected_task(selected_list* sl)
+{
+    size_t i;
+    for (i = 0; sl->name_task[i] != '~'; i++)
+        ;
+    sl->name_task[i] = '\0';
+    printf("Selected task: %s\n\n", &sl->name_task[1]);
+    sl->name_task[i] = '~';
+}

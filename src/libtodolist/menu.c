@@ -148,7 +148,7 @@ void choose_action_task(selected_list* sl, FILE* list)
 
     size_t select;
 
-    // printf selected task
+    print_selected_task(sl);
     printf("1. Delete task\n");
 
     // unused if task is completed

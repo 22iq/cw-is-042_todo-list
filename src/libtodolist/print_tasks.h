@@ -8,3 +8,4 @@
 #define false 0
 
 void print_tasks(selected_list* sl, FILE* list, size_t* list_is_empty);
+void print_selected_task(selected_list* sl);
