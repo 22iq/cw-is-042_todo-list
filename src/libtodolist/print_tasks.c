@@ -22,3 +22,13 @@ void print_tasks(selected_list* sl, FILE* list)
     }
     rewind(list);
 }
+
+void print_selected_list(selected_list* sl)
+{
+    int i;
+    for (i = 0; sl->name_list[i] != '.'; i++)
+        ;
+    sl->name_list[i] = '\0';
+    printf("Selected list: %s\n", sl->name_list);
+    sl->name_list[i] = '.';
+}

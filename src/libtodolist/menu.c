@@ -93,10 +93,11 @@ void open_list(selected_list* sl)
     do {
         system("clear");
 
-        // printf selected list
+        print_selected_list(sl);
+
         // print_tasks(); or printf todolist is empty
         print_tasks(sl, list);
-        printf("1. Create task\n");
+        printf("\n1. Create task\n");
 
         // unused if todolist is empty
         printf("2. Select task\n");
@@ -108,13 +109,13 @@ void open_list(selected_list* sl)
 
         switch (select) {
         case 1:
-            // create_task(sl, file);
+            // create_task(sl, list);
             break;
         case 2:
-            // select_task(sl, file);
+            // select_task(sl, list);
             break;
         case 3:
-            // fclose(file);
+            fclose(list);
             return;
         }
     } while (1);
