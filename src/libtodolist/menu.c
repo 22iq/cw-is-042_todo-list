@@ -1,6 +1,7 @@
 #include "menu.h"
 
 #include "get_list.h"
+#include "get_task.h"
 #include "print_lists.h"
 #include "print_tasks.h"
 
@@ -119,7 +120,7 @@ void open_list(selected_list* sl)
                 fclose(list);
                 return;
             }
-            // select_task(sl, list);
+            select_task(sl, list);
             break;
         case 3:
             fclose(list);
@@ -128,20 +129,20 @@ void open_list(selected_list* sl)
     } while (1);
 }
 
-void select_task(selected_list* sl, FILE* file)
+void select_task(selected_list* sl, FILE* list)
 {
     system("clear");
 
     size_t select;
 
-    // print_tasks();
-    // do {
-    scanf("%lu", &select);
-    //} while (get_task(select, sl));
-    choose_action_task(sl, file);
+    print_tasks(sl, list, false);
+    do {
+        scanf("%lu", &select);
+    } while (get_task(select, sl, list));
+    choose_action_task(sl, list);
 }
 
-void choose_action_task(selected_list* sl, FILE* file)
+void choose_action_task(selected_list* sl, FILE* list)
 {
     system("clear");
 
@@ -161,13 +162,13 @@ void choose_action_task(selected_list* sl, FILE* file)
 
     switch (select) {
     case 1:
-        // delete_task(sl, file);
+        // delete_task(sl, list);
         break;
     case 2:
-        // edit_task(sl, file);
+        // edit_task(sl, list);
         break;
     case 3:
-        // completed_task(sl, file);
+        // completed_task(sl, list);
     case 4:
         return;
     }

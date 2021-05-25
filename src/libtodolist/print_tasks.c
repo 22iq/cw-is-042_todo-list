@@ -1,7 +1,5 @@
 #include "print_tasks.h"
 
-#include <stdio.h>
-
 void print_tasks(selected_list* sl, FILE* list, size_t* list_is_empty)
 {
     size_t bytes = sizeof(sl->name_task) - 2 * sizeof(char);
