@@ -1,9 +1,14 @@
 #include "menu.h"
 
+#include "check_action.h"
+#include "completed_task.h"
 #include "get_list.h"
+#include "get_task.h"
 #include "print_lists.h"
+#include "print_tasks.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 void list_menu()
 {
@@ -24,7 +29,9 @@ void list_menu()
 
         switch (select) {
         case 1:
-            // create_list(sl);
+            if (!check_action("create list")) {
+                // create_list(sl);
+            }
             break;
         case 2:
             select_list(&sl);
@@ -66,10 +73,14 @@ void choose_action_list(selected_list* sl)
 
     switch (select) {
     case 1:
-        // delete_list(sl);
+        if (!check_action("delete list")) {
+            // delete_list(sl);
+        }
         break;
     case 2:
-        // rename_list(sl);
+        if (!check_action("rename list")) {
+            // rename_list(sl);
+        }
         break;
     case 3:
         open_list(sl);
@@ -81,77 +92,104 @@ void choose_action_list(selected_list* sl)
 void open_list(selected_list* sl)
 {
     size_t select;
-    // fopen file .txt
+
+    // get full path
+    char path[44] = "./lists/";
+    strcat(path, sl->name_list);
+
+    FILE* list = fopen(path, "r+");
 
     do {
         system("clear");
 
-        // printf selected list
-        // print_tasks(); or printf todolist is empty
-        printf("1. Create task\n");
+        size_t count = 1;
+        size_t list_is_empty = 0;
+
+        print_selected_list(sl);
+        print_tasks(sl, list, &list_is_empty);
+        printf("\n%lu. Create task\n", count++);
 
         // unused if todolist is empty
-        printf("2. Select task\n");
-        printf("3. Back\n\n");
+        if (!list_is_empty) {
+            printf("%lu. Select task\n", count++);
+        }
+        printf("%lu. Back\n\n", count);
 
         do {
             scanf("%lu", &select);
-        } while (select == 0 || select > 3);
+        } while (select == 0 || select > count);
 
         switch (select) {
         case 1:
-            // create_task(sl, file);
+            if (!check_action("create task")) {
+                // create_task(sl, list);
+            }
             break;
         case 2:
-            // select_task(sl, file);
+            if (list_is_empty) {
+                fclose(list);
+                return;
+            }
+            select_task(sl, list);
             break;
         case 3:
-            // fclose(file);
+            fclose(list);
             return;
         }
     } while (1);
 }
 
-void select_task(selected_list* sl, FILE* file)
+void select_task(selected_list* sl, FILE* list)
 {
     system("clear");
 
     size_t select;
 
-    // print_tasks();
-    // do {
-    scanf("%lu", &select);
-    //} while (get_task(select, sl));
-    choose_action_task(sl, file);
+    print_tasks(sl, list, false);
+    do {
+        scanf("%lu", &select);
+    } while (get_task(select, sl, list));
+    choose_action_task(sl, list, select);
 }
 
-void choose_action_task(selected_list* sl, FILE* file)
+void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
 {
     system("clear");
 
-    size_t select;
+    size_t select, count = 1;
 
-    // printf selected task
-    printf("1. Delete task\n");
+    print_selected_task(sl);
+    printf("%lu. Delete task\n", count++);
 
     // unused if task is completed
-    printf("2. Edit task\n");
-    printf("3. Mark task as completed\n");
-    printf("4. Back\n\n");
+    if (sl->name_task[0] == 'X') {
+        printf("%lu. Edit task\n", count++);
+        printf("%lu. Mark task as completed\n", count++);
+    }
+    printf("%lu. Back\n\n", count);
 
     do {
         scanf("%lu", &select);
-    } while (select == 0 || select > 4);
+    } while (select == 0 || select > count);
 
     switch (select) {
     case 1:
-        // delete_task(sl, file);
+        if (!check_action("delete task")) {
+            // delete_task(sl, list);
+        }
         break;
     case 2:
-        // edit_task(sl, file);
+        if (sl->name_task[0] == 'O') {
+            return;
+        }
+        if (!check_action("edit task")) {
+            // edit_task(sl, list);
+        }
         break;
     case 3:
-        // completed_task(sl, file);
+        if (!check_action("mark task as completed")) {
+            completed_task(sl, list, number_task);
+        }
     case 4:
         return;
     }
