@@ -29,6 +29,7 @@ size_t create_task(selected_list* sl, FILE* file)
         sl->name_task[i] = '~';
     }
     fwrite(sl->name_task, sizeof(char), 151, file);
+    return 0;
 }
 size_t search_last_task(selected_list* sl, FILE* file)
 {
@@ -54,6 +55,7 @@ size_t delete_task(selected_list* sl, FILE* file, size_t number_task)
         return 3;
     }
     rewind(file);
+    return 0;
 }
 size_t edit_task(selected_list* sl, FILE* file, size_t number_task)
 {
@@ -78,4 +80,5 @@ size_t edit_task(selected_list* sl, FILE* file, size_t number_task)
         return 5;
     }
     rewind(file);
+    return 0;
 }
