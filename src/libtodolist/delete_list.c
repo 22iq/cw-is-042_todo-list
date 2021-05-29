@@ -4,7 +4,10 @@
 
 int delete_list(selected_list* v)
 {
-    char wayfile[90] = "file/";
+    char wayfile[45] = "./lists/";
+
+    if (strcmp(v->name_list, "Default.txt") == 0)
+        return 2;
 
     strcat(wayfile, v->name_list);
     if (remove(wayfile) == 0) {
@@ -18,3 +21,4 @@ int delete_list(selected_list* v)
 }
 // return 0 - Всё отлично
 // return 1 - Ошибка
+// return 2 - Default.txt

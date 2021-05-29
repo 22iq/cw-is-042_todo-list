@@ -7,6 +7,7 @@
 #include "get_list.h"
 #include "get_number_selected_action.h"
 #include "get_task.h"
+#include "name_initialization.h"
 #include "print_lists.h"
 #include "print_tasks.h"
 #include "rename_list.h"
@@ -32,6 +33,7 @@ void list_menu()
         switch (select) {
         case 1:
             if (!check_action("create list")) {
+                name_initialization(&sl);
                 create_list(&sl);
             }
             break;
@@ -62,6 +64,7 @@ void choose_action_list(selected_list* sl)
     system("clear");
 
     size_t select;
+    char new_name_file[36];
 
     // printf selected list
     printf("1. Delete list\n");
@@ -79,7 +82,7 @@ void choose_action_list(selected_list* sl)
         break;
     case 2:
         if (!check_action("rename list")) {
-            rename_list(sl);
+            rename_list(sl, new_name_initialization(new_name_file));
         }
         break;
     case 3:
