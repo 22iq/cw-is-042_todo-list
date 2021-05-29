@@ -5,7 +5,6 @@
 size_t check_action(char* command)
 {
     char c, next;
-    system("clear");
     printf("Do you really want to %s?\nEnter Y/N: ", command);
     do {
         c = getchar();

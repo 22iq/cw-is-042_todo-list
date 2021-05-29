@@ -123,6 +123,8 @@ void open_list(selected_list* sl)
         switch (select) {
         case 1:
             if (!check_action("create_task")) {
+                sl->name_task[152] = '~';
+                fgets(&sl->name_task[1], 152, stdin);
                 create_task(sl, list);
             }
             break;
@@ -183,6 +185,8 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
             return;
         }
         if (!check_action("edit task")) {
+            sl->name_task[152] = '~';
+            fgets(&sl->name_task[1], 152, stdin);
             edit_task(sl, list, number_task);
         }
         break;
