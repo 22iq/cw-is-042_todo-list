@@ -5,9 +5,13 @@
 int create_list(selected_list* v)
 {
     //Переменные
-    char namefile[36] = {1};
+    char namefile[36];
     char txt_file[] = ".txt";
-    char wayfile[90] = "../lists/";
+    char wayfile[90] = "./lists/";
+
+    for (size_t j = 0; j < 35; j++) {
+        namefile[j] = '1';
+    }
 
     //Ввод названия файла
 
@@ -18,7 +22,7 @@ int create_list(selected_list* v)
     }
 
     //Проверка
-    for (size_t i = 0; namefile[i] != '\0'; i++) {
+    for (int i = 0; namefile[i] != '\0'; i++) {
         if (namefile[i] == '\n') {
             namefile[i] = '\0';
         }
@@ -48,17 +52,17 @@ int create_list(selected_list* v)
     //Проверка ниличия файла
     FILE* filetest = fopen(wayfile, "r+");
     if (filetest != NULL) {
+        fclose(filetest);
         return 4;
     }
-    fclose(filetest);
 
     //Присоединение пути и расширения
 
     FILE* file = fopen(wayfile, "w");
     if (file != NULL) {
         strcpy(v->name_list, namefile);
+        fclose(file);
     }
-    fclose(file);
 
     return 0;
 }

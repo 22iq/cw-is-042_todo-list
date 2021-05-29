@@ -5,11 +5,14 @@
 int rename_list(selected_list* v)
 {
     //Переменные
-    char newnamefile[36] = {1};
+    char newnamefile[36];
     char txt_file[] = ".txt";
-    char oldnamefile[90] = "../lists/";
-    char wayfile[90] = "../lists/";
+    char oldnamefile[90] = "./lists/";
+    char wayfile[90] = "./lists/";
 
+    for (size_t j = 0; j < 35; j++) {
+        newnamefile[j] = '1';
+    }
     //Ввод названия файла
     fgets(newnamefile, 32, stdin);
     if ((newnamefile[31] == '\0') && (newnamefile[30] != '\n')) {
@@ -56,9 +59,9 @@ int rename_list(selected_list* v)
     //Проверка ниличия файла
     FILE* filetest = fopen(wayfile, "r+");
     if (filetest != NULL) {
+        fclose(filetest);
         return 4;
     }
-    fclose(filetest);
 
     //Переименовать
     strcat(oldnamefile, v->name_list);
