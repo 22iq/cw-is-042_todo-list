@@ -76,7 +76,7 @@ CTEST(rename_list, correct_input_of_an_invalid_name)
     ASSERT_EQUAL(expect, result);
 }
 
-CTEST(rename_list, correct_input_of_an_invalid_name)
+CTEST(rename_list, correct_input_of_an_invalid_name_1)
 {
     selected_list test;
     char test_name_file[36] = "Default.txt\0";
