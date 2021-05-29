@@ -3,6 +3,7 @@
 #include "check_action.h"
 #include "completed_task.h"
 #include "get_list.h"
+#include "get_number_selected_action.h"
 #include "get_task.h"
 #include "print_lists.h"
 #include "print_tasks.h"
@@ -23,9 +24,7 @@ void list_menu()
         printf("2. Select list\n");
         printf("3. Exit the program\n\n");
 
-        do {
-            scanf("%lu", &select);
-        } while (select == 0 || select > 3);
+        get_number_selected_action(&select, 3);
 
         switch (select) {
         case 1:
@@ -67,9 +66,7 @@ void choose_action_list(selected_list* sl)
     printf("3. Open list\n");
     printf("4. Back\n\n");
 
-    do {
-        scanf("%lu", &select);
-    } while (select == 0 || select > 4);
+    get_number_selected_action(&select, 4);
 
     switch (select) {
     case 1:
@@ -115,9 +112,7 @@ void open_list(selected_list* sl)
         }
         printf("%lu. Back\n\n", count);
 
-        do {
-            scanf("%lu", &select);
-        } while (select == 0 || select > count);
+        get_number_selected_action(&select, count);
 
         switch (select) {
         case 1:
@@ -168,9 +163,7 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
     }
     printf("%lu. Back\n\n", count);
 
-    do {
-        scanf("%lu", &select);
-    } while (select == 0 || select > count);
+    get_number_selected_action(&select, count);
 
     switch (select) {
     case 1:
