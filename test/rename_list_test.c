@@ -75,3 +75,15 @@ CTEST(rename_list, correct_input_of_an_invalid_name)
     const int result = rename_list(&test, test_new_name_file);
     ASSERT_EQUAL(expect, result);
 }
+
+CTEST(rename_list, correct_input_of_an_invalid_name)
+{
+    selected_list test;
+    char test_name_file[36] = "Default.txt\0";
+    char test_new_name_file[36] = "PRN\0";
+    strcpy(test.name_list, test_name_file);
+    const int expect = 5;
+
+    const int result = rename_list(&test, test_new_name_file);
+    ASSERT_EQUAL(expect, result);
+}

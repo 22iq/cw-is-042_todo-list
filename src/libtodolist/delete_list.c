@@ -20,5 +20,5 @@ int delete_list(selected_list* v)
     }
 }
 // return 0 - Всё отлично
-// return 1 - Ошибка
+// return 1 - Такого файла не существует
 // return 2 - Default.txt
