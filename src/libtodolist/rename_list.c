@@ -2,20 +2,22 @@
 #include <stdio.h>
 #include <string.h>
 
-int rename_list(selected_list* v)
+int rename_list(selected_list* v, char* newnamefile)
 {
     //Переменные
-    char newnamefile[36] = {1};
-    char txt_file[] = ".txt";
-    char oldnamefile[90] = "../lists/";
-    char wayfile[90] = "../lists/";
 
-    //Ввод названия файла
-    fgets(newnamefile, 32, stdin);
+    char txt_file[] = ".txt";
+    char oldnamefile[45] = "./lists/";
+    char wayfile[45] = "./lists/";
+
+    if (strcmp(v->name_list, "Default.txt") == 0) {
+        return 5;
+    }
+
     if ((newnamefile[31] == '\0') && (newnamefile[30] != '\n')) {
         return 1;
     }
-    //
+
     if ((strcmp(newnamefile, "PRN") == 0) || (strcmp(newnamefile, "AUX") == 0)
         || (strcmp(newnamefile, "NUL") == 0)
         || (strcmp(newnamefile, "COM1") == 0)
@@ -35,7 +37,8 @@ int rename_list(selected_list* v)
         || (strcmp(newnamefile, "LPT6") == 0)
         || (strcmp(newnamefile, "LPT7") == 0)
         || (strcmp(newnamefile, "LPT8") == 0)
-        || (strcmp(newnamefile, "LPT9") == 0)) {
+        || (strcmp(newnamefile, "LPT9") == 0)
+        || (strcmp(newnamefile, "Default") == 0)) {
         return 3;
     }
     //Проверка
@@ -56,9 +59,9 @@ int rename_list(selected_list* v)
     //Проверка ниличия файла
     FILE* filetest = fopen(wayfile, "r+");
     if (filetest != NULL) {
+        fclose(filetest);
         return 4;
     }
-    fclose(filetest);
 
     //Переименовать
     strcat(oldnamefile, v->name_list);
@@ -71,3 +74,4 @@ int rename_list(selected_list* v)
 // return 2 - Недопустимое значение символов
 // return 3 - Недопустимое название файла
 // return 4 - Такой файл существует
+// return 5 - Этот файл нельзя удалить
