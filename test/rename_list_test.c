@@ -1,6 +1,7 @@
 #include <ctest.h>
 #include <libtodolist/rename_list.h>
 #include <libtodolist/selected_list_type.h>
+#include <stdio.h>
 #include <string.h>
 
 CTEST(rename_list, correct_input_with_valid_characters)
@@ -53,7 +54,7 @@ CTEST(rename_list, correct_input_in_small_letters)
 {
     selected_list test;
     char test_name_file[36] = "123File.txt\0";
-    char test_new_name_file[36] = "filesfiles\0";
+    char test_new_name_file[36] = "files123\0";
     char new_name_file[36];
 
     for (size_t i = 0; i < 35; i++) {
@@ -70,23 +71,26 @@ CTEST(rename_list, correct_input_in_small_letters)
 
     const int result = rename_list(&test, new_name_file);
     ASSERT_EQUAL(expect, result);
+    remove("./lists/files123.txt");
 }
 
 CTEST(rename_list, incorrect_input_with_large_number_of_characters)
 {
     selected_list test;
     char test_name_file[36] = "123File.txt\0";
-    char test_new_name_file[] = "name with a large number of characters\0";
+    char test_new_name_file[] = "name with a large number of character\0";
 
     for (size_t i = 0; i < 35; i++) {
         test.name_list[i] = '1';
     }
 
     strcpy(test.name_list, test_name_file);
+    test_new_name_file[31] = '\0';
     const int expect = 1;
 
     const int result = rename_list(&test, test_new_name_file);
     ASSERT_EQUAL(expect, result);
+    test.name_list[31] = '\0';
 }
 
 CTEST(rename_list, incorrect_input_with_invalid_characters)

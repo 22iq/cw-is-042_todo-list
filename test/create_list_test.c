@@ -54,13 +54,14 @@ CTEST(create_list, correct_input_in_small_letters)
 CTEST(create_list, incorrect_input_with_large_number_of_characters)
 {
     selected_list test;
-    // char test_name_file[] = "name with a large number of characters\0";
+    char test_name_file[] = "name with a large number of characters\0";
 
     for (size_t i = 0; i < 35; i++) {
         test.name_list[i] = '1';
     }
 
-    strcpy(test.name_list, "name with a large number of characters\0");
+    strcpy(test.name_list, test_name_file);
+    test.name_list[31] = '\0';
     const int expect = 1;
 
     const int result = create_list(&test);
