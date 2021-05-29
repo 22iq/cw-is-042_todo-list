@@ -14,7 +14,7 @@ int create_list(selected_list* v)
     fgets(namefile, 30, stdin);
 
     //Проверка
-    for (int i = 0; i < 30; i++) {
+    for (size_t i = 0; i < 30; i++) {
         if (namefile[i] == '\n') {
             namefile[i] = '\0';
         }
