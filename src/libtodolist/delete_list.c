@@ -8,7 +8,7 @@ int delete_list(selected_list* v)
 
     strcat(wayfile, v->name_list);
     if (remove(wayfile) == NULL) {
-        for (size_t i = 0; i < 30; i++) {
+        for (size_t i = 0; i < 35; i++) {
             v->name_list[i] = '\0';
         }
         return 0;
