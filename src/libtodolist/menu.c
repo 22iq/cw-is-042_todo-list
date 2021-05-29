@@ -119,9 +119,9 @@ void open_list(selected_list* sl)
 
         switch (select) {
         case 1:
-
-            create_task(sl, list);
-
+            if (!check_action("create_task")) {
+                create_task(sl, list);
+            }
             break;
         case 2:
             if (list_is_empty) {
@@ -147,6 +147,7 @@ void select_task(selected_list* sl, FILE* list)
     do {
         scanf("%lu", &select);
     } while (get_task(select, sl, list));
+    select = get_number_task_in_file(sl, list, select);
     choose_action_task(sl, list, select);
 }
 
@@ -171,7 +172,7 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
     switch (select) {
     case 1:
         if (!check_action("delete task")) {
-            // delete_task(sl, list);
+            delete_task(sl, list, number_task);
         }
         break;
     case 2:
@@ -179,7 +180,7 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
             return;
         }
         if (!check_action("edit task")) {
-            // edit_task(sl, list);
+            edit_task(sl, list, number_task);
         }
         break;
     case 3:
