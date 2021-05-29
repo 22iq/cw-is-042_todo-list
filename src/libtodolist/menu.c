@@ -2,11 +2,14 @@
 
 #include "check_action.h"
 #include "completed_task.h"
+#include "create_list.h"
+#include "delete_list.h"
 #include "get_list.h"
 #include "get_number_selected_action.h"
 #include "get_task.h"
 #include "print_lists.h"
 #include "print_tasks.h"
+#include "rename_list.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +32,7 @@ void list_menu()
         switch (select) {
         case 1:
             if (!check_action("create list")) {
-                // create_list(sl);
+                create_list(&sl);
             }
             break;
         case 2:
@@ -71,12 +74,12 @@ void choose_action_list(selected_list* sl)
     switch (select) {
     case 1:
         if (!check_action("delete list")) {
-            // delete_list(sl);
+            delete_list(sl);
         }
         break;
     case 2:
         if (!check_action("rename list")) {
-            // rename_list(sl);
+            rename_list(sl);
         }
         break;
     case 3:
@@ -116,9 +119,9 @@ void open_list(selected_list* sl)
 
         switch (select) {
         case 1:
-             
-                create_task(sl, list);
-            
+
+            create_task(sl, list);
+
             break;
         case 2:
             if (list_is_empty) {

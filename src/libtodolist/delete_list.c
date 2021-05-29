@@ -7,7 +7,7 @@ int delete_list(selected_list* v)
     char wayfile[90] = "file/";
 
     strcat(wayfile, v->name_list);
-    if (remove(wayfile) == NULL) {
+    if (remove(wayfile) == 0) {
         for (size_t i = 0; i < 35; i++) {
             v->name_list[i] = '\0';
         }
