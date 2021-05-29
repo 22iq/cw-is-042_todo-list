@@ -13,12 +13,12 @@ int create_list(selected_list* v)
 
     fgets(namefile, 32, stdin);
 
-    // if ((namefile[31] == '\0') && (namefile[30] != '\n')) {
-    //     return 1;
-    // }
+    if ((namefile[31] == '\0') && (namefile[30] != '\n')) {
+        return 1;
+    }
 
     //Проверка
-    for (size_t i = 0; i < 31; i++) {
+    for (size_t i = 0; namefile[i] != '\0'; i++) {
         if (namefile[i] == '\n') {
             namefile[i] = '\0';
         }

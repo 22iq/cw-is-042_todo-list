@@ -4,7 +4,7 @@
 
 int delete_list(selected_list* v)
 {
-    char wayfile[90] = "file/";
+    char wayfile[90] = "../lists/";
 
     strcat(wayfile, v->name_list);
     if (remove(wayfile) == 0) {
