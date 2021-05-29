@@ -16,7 +16,7 @@ bool check_characters_by_ASCII(selected_list* sl, FILE* file)
 }
 size_t create_task(selected_list* sl, FILE* file)
 {
-    size_t i, count;
+    size_t i, n;
     char c = ' ';
     sl->name_task[0] = 'X';
     fgets(&sl->name_task[1], 152, stdin);
@@ -32,7 +32,8 @@ size_t create_task(selected_list* sl, FILE* file)
         sl->name_task[i] = '~';
     }
     rewind(file);
-    while (!feof(file)) {
+    n = search_last_task(sl, file);
+    for (i = 0; i < n; i++) {
         fread(&c, sizeof(char), 1, file);
         fseek(file, -1, SEEK_CUR);
         if (c == '\0') {
@@ -40,11 +41,11 @@ size_t create_task(selected_list* sl, FILE* file)
             break;
         }
         fseek(file, 151, SEEK_CUR);
-        count++;
     }
-    if (count == search_last_task(sl, file)) {
+    if (i == search_last_task(sl, file)) {
         fwrite(sl->name_task, sizeof(char), 151, file);
     }
+    rewind(file);
     return 0;
 }
 size_t search_last_task(selected_list* sl, FILE* file)
@@ -54,7 +55,7 @@ size_t search_last_task(selected_list* sl, FILE* file)
     size_t n = ftell(file) / bytes;
     return n;
     rewind(file);
-    return 0; 
+    return 0;
 }
 size_t delete_task(selected_list* sl, FILE* file, size_t number_task)
 {
