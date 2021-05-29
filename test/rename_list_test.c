@@ -1,6 +1,6 @@
-#include "src/libtodolist/selected_list_type.h"
 #include <ctest.h>
 #include <libtodolist/rename_list.h>
+#include <libtodolist/selected_list_type.h>
 #include <string.h>
 
 CTEST(rename_list, correct_input_with_valid_characters)
