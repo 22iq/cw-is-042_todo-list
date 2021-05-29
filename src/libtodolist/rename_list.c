@@ -5,16 +5,16 @@
 int rename_list(selected_list* v)
 {
     //Переменные
-    char newnamefile[30];
-    char txt_file[90] = ".txt";
-    char oldnamefile[90] = "file/";
-    char wayfile[90] = "file/";
+    char newnamefile[36] = {1};
+    char txt_file[] = ".txt";
+    char oldnamefile[90] = "../lists/";
+    char wayfile[90] = "../lists/";
 
     //Ввод названия файла
-    for (size_t i = 0; i < 30; i++) {
-        newnamefile[i] = '\0';
+    fgets(newnamefile, 32, stdin);
+    if ((newnamefile[31] == '\0') && (newnamefile[30] != '\n')) {
+        return 1;
     }
-    fgets(newnamefile, 30, stdin);
     //
     if ((strcmp(newnamefile, "PRN") == 0) || (strcmp(newnamefile, "AUX") == 0)
         || (strcmp(newnamefile, "NUL") == 0)
@@ -36,10 +36,10 @@ int rename_list(selected_list* v)
         || (strcmp(newnamefile, "LPT7") == 0)
         || (strcmp(newnamefile, "LPT8") == 0)
         || (strcmp(newnamefile, "LPT9") == 0)) {
-        return 0;
+        return 3;
     }
     //Проверка
-    for (size_t i = 0; i < 30; i++) {
+    for (size_t i = 0; i < 31; i++) {
         if (newnamefile[i] == '\n') {
             newnamefile[i] = '\0';
         }
@@ -48,7 +48,7 @@ int rename_list(selected_list* v)
             || (newnamefile[i] >= '0' && newnamefile[i] <= '9')
             || (newnamefile[i] >= '\0')) {
         } else {
-            return 0;
+            return 2;
         }
     }
     strcat(newnamefile, txt_file);
@@ -56,12 +56,18 @@ int rename_list(selected_list* v)
     //Проверка ниличия файла
     FILE* filetest = fopen(wayfile, "r+");
     if (filetest != NULL) {
-        return 2;
+        return 4;
     }
+    fclose(filetest);
 
     //Переименовать
     strcat(oldnamefile, v->name_list);
     rename(oldnamefile, wayfile);
     strcpy(v->name_list, newnamefile);
-    return 1;
+    return 0;
 }
+// return 0 - Всё отлично
+// return 1 - Превышено допустимое кол-во символов
+// return 2 - Недопустимое значение символов
+// return 3 - Недопустимое название файла
+// return 4 - Такой файл существует
