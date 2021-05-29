@@ -64,6 +64,7 @@ void choose_action_list(selected_list* sl)
     system("clear");
 
     size_t select;
+    char new_name_file[36];
 
     // printf selected list
     printf("1. Delete list\n");
@@ -81,7 +82,7 @@ void choose_action_list(selected_list* sl)
         break;
     case 2:
         if (!check_action("rename list")) {
-            rename_list(sl);
+            rename_list(sl, new_name_initialization(new_name_file));
         }
         break;
     case 3:
