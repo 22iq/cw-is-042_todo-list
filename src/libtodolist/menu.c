@@ -116,9 +116,9 @@ void open_list(selected_list* sl)
 
         switch (select) {
         case 1:
-            if (!check_action("create task")) {
-                // create_task(sl, list);
-            }
+             
+                create_task(sl, list);
+            
             break;
         case 2:
             if (list_is_empty) {

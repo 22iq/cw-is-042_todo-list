@@ -1,4 +1,6 @@
 #include "task.h"
+#include <stdlib.h>
+#include <ctype.h>
 #include <stdio.h>
 bool check_characters_by_ASCII(selected_list* sl, FILE* file)
 {
@@ -32,14 +34,10 @@ size_t create_task(selected_list* sl, FILE* file)
     return 0;
 }
 size_t search_last_task(selected_list* sl, FILE* file)
-{
-    size_t number_last_task = 0;
-    fseek(file, 0, SEEK_SET);
-    while (!feof(file)) {
-        fgets(sl->name_task, 151, file);
-        number_last_task++;
-    }
-    return number_last_task;
+{   size_t bytes = sizeof(sl->name_task) - 2 * sizeof(char);
+    fseek(file, 0, SEEK_END);
+    size_t n = ftell(file) / bytes;
+    return n;
     rewind(file);
 }
 size_t delete_task(selected_list* sl, FILE* file, size_t number_task)
