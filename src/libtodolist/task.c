@@ -19,8 +19,6 @@ size_t create_task(selected_list* sl, FILE* file)
     size_t i, n;
     char c = ' ';
     sl->name_task[0] = 'X';
-    sl->name_task[152] = '~';
-    fgets(&sl->name_task[1], 152, stdin);
     if (sl->name_task[152] == '\0' && sl->name_task[151] != '\n') {
         do {
             c = getchar();
@@ -84,12 +82,7 @@ size_t edit_task(selected_list* sl, FILE* file, size_t number_task)
     size_t number_edit_task = number_task;
     size_t bytes_to_delit = (number_edit_task - 1) * 151;
     fseek(file, bytes_to_delit, SEEK_SET);
-    for (i = 1; i < 152; i++) {
-        sl->name_task[i] = ' ';
-    }
     sl->name_task[0] = 'X';
-    sl->name_task[152] = '~';
-    fgets(&sl->name_task[1], 152, stdin);
     if (sl->name_task[152] == '\0' && sl->name_task[151] != '\n') {
         do {
             c = getchar();
