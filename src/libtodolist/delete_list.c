@@ -4,7 +4,7 @@
 
 int delete_list(selected_list* v)
 {
-    char wayfile[90] = "./lists/";
+    char wayfile[45] = "./lists/";
 
     if (strcmp(v->name_list, "Default.txt") == 0)
         return 2;

@@ -7,8 +7,8 @@ int rename_list(selected_list* v)
     //Переменные
     char newnamefile[36];
     char txt_file[] = ".txt";
-    char oldnamefile[90] = "./lists/";
-    char wayfile[90] = "./lists/";
+    char oldnamefile[45] = "./lists/";
+    char wayfile[45] = "./lists/";
 
     for (size_t j = 0; j < 35; j++) {
         newnamefile[j] = '1';

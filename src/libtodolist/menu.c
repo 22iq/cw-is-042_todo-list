@@ -7,6 +7,7 @@
 #include "get_list.h"
 #include "get_number_selected_action.h"
 #include "get_task.h"
+#include "name_initialization.h"
 #include "print_lists.h"
 #include "print_tasks.h"
 #include "rename_list.h"
@@ -32,6 +33,7 @@ void list_menu()
         switch (select) {
         case 1:
             if (!check_action("create list")) {
+                name_initialization(&sl);
                 create_list(&sl);
             }
             break;

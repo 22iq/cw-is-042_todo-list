@@ -5,50 +5,52 @@
 int create_list(selected_list* v)
 {
     //Переменные
-    char namefile[36];
     char txt_file[] = ".txt";
-    char wayfile[90] = "./lists/";
-
-    for (size_t j = 0; j < 35; j++) {
-        namefile[j] = '1';
-    }
+    char wayfile[45] = "./lists/";
 
     //Ввод названия файла
 
-    fgets(namefile, 32, stdin);
-
-    if ((namefile[31] == '\0') && (namefile[30] != '\n')) {
+    if ((v->name_list[31] == '\0') && (v->name_list[30] != '\n')) {
         return 1;
     }
 
     //Проверка
-    for (int i = 0; namefile[i] != '\0'; i++) {
-        if (namefile[i] == '\n') {
-            namefile[i] = '\0';
+    for (int i = 0; v->name_list[i] != '\0'; i++) {
+        if (v->name_list[i] == '\n') {
+            v->name_list[i] = '\0';
         }
-        if ((namefile[i] >= 'A' && namefile[i] <= 'Z')
-            || (namefile[i] >= 'a' && namefile[i] <= 'z')
-            || (namefile[i] >= '0' && namefile[i] <= '9')
-            || (namefile[i] == '\0') || (namefile[i] == ' ')) {
+        if ((v->name_list[i] >= 'A' && v->name_list[i] <= 'Z')
+            || (v->name_list[i] >= 'a' && v->name_list[i] <= 'z')
+            || (v->name_list[i] >= '0' && v->name_list[i] <= '9')
+            || (v->name_list[i] == '\0') || (v->name_list[i] == ' ')) {
         } else {
             return 2;
         }
     }
-    if ((strcmp(namefile, "PRN") == 0) || (strcmp(namefile, "AUX") == 0)
-        || (strcmp(namefile, "NUL") == 0) || (strcmp(namefile, "COM1") == 0)
-        || (strcmp(namefile, "COM2") == 0) || (strcmp(namefile, "COM3") == 0)
-        || (strcmp(namefile, "COM4") == 0) || (strcmp(namefile, "COM5") == 0)
-        || (strcmp(namefile, "COM6") == 0) || (strcmp(namefile, "COM7") == 0)
-        || (strcmp(namefile, "COM8") == 0) || (strcmp(namefile, "COM9") == 0)
-        || (strcmp(namefile, "LPT1") == 0) || (strcmp(namefile, "LPT2") == 0)
-        || (strcmp(namefile, "LPT3") == 0) || (strcmp(namefile, "LPT4") == 0)
-        || (strcmp(namefile, "LPT5") == 0) || (strcmp(namefile, "LPT6") == 0)
-        || (strcmp(namefile, "LPT7") == 0) || (strcmp(namefile, "LPT8") == 0)
-        || (strcmp(namefile, "LPT9") == 0)) {
+    if ((strcmp(v->name_list, "PRN") == 0) || (strcmp(v->name_list, "AUX") == 0)
+        || (strcmp(v->name_list, "NUL") == 0)
+        || (strcmp(v->name_list, "COM1") == 0)
+        || (strcmp(v->name_list, "COM2") == 0)
+        || (strcmp(v->name_list, "COM3") == 0)
+        || (strcmp(v->name_list, "COM4") == 0)
+        || (strcmp(v->name_list, "COM5") == 0)
+        || (strcmp(v->name_list, "COM6") == 0)
+        || (strcmp(v->name_list, "COM7") == 0)
+        || (strcmp(v->name_list, "COM8") == 0)
+        || (strcmp(v->name_list, "COM9") == 0)
+        || (strcmp(v->name_list, "LPT1") == 0)
+        || (strcmp(v->name_list, "LPT2") == 0)
+        || (strcmp(v->name_list, "LPT3") == 0)
+        || (strcmp(v->name_list, "LPT4") == 0)
+        || (strcmp(v->name_list, "LPT5") == 0)
+        || (strcmp(v->name_list, "LPT6") == 0)
+        || (strcmp(v->name_list, "LPT7") == 0)
+        || (strcmp(v->name_list, "LPT8") == 0)
+        || (strcmp(v->name_list, "LPT9") == 0)) {
         return 3;
     }
-    strcat(namefile, txt_file);
-    strcat(wayfile, namefile);
+    strcat(v->name_list, txt_file);
+    strcat(wayfile, v->name_list);
     //Проверка ниличия файла
     FILE* filetest = fopen(wayfile, "r+");
     if (filetest != NULL) {
@@ -60,7 +62,6 @@ int create_list(selected_list* v)
 
     FILE* file = fopen(wayfile, "w");
     if (file != NULL) {
-        strcpy(v->name_list, namefile);
         fclose(file);
     }
 
