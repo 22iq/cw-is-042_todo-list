@@ -54,7 +54,7 @@ size_t search_last_task(selected_list* sl, FILE* file)
     size_t n = ftell(file) / bytes;
     return n;
     rewind(file);
-    return 0;
+    return 0; 
 }
 size_t delete_task(selected_list* sl, FILE* file, size_t number_task)
 {
