@@ -4,6 +4,7 @@
 #include "completed_task.h"
 #include "create_list.h"
 #include "delete_list.h"
+#include "error_output.h"
 #include "get_list.h"
 #include "get_number_selected_action.h"
 #include "get_task.h"
@@ -37,8 +38,11 @@ void list_menu()
         switch (select) {
         case 1:
             if (!check_action("create list")) {
+                printf("\nInput name list:\n");
                 name_initialization(&sl);
-                error_code = create_list(&sl);
+                if ((error_code = create_list(&sl)) != 0) {
+                    error_output(1, error_code);
+                }
             }
             break;
         case 2:
@@ -47,7 +51,7 @@ void list_menu()
         case 3:
             return;
         }
-        press_enter_to_continue(error_code);
+        press_any_key_to_continue(error_code);
     } while (1);
 }
 
@@ -62,7 +66,9 @@ void select_list(selected_list* sl)
     printf("\nSelect list: ");
     do {
         scanf("%lu", &select);
-        error_code = get_list(select, sl);
+        if ((error_code = get_list(select, sl)) != 0) {
+            error_output(2, error_code);
+        }
     } while (error_code);
     choose_action_list(sl);
 }
@@ -86,13 +92,19 @@ void choose_action_list(selected_list* sl)
     switch (select) {
     case 1:
         if (!check_action("delete list")) {
-            error_code = delete_list(sl);
+            if ((error_code = delete_list(sl)) != 0) {
+                error_output(3, error_code);
+            }
         }
         break;
     case 2:
         if (!check_action("rename list")) {
-            error_code
-                    = rename_list(sl, new_name_initialization(new_name_file));
+            printf("\nInput new name list:\n");
+            if ((error_code
+                 = rename_list(sl, new_name_initialization(new_name_file)))
+                != 0) {
+                error_output(1, error_code);
+            }
         }
         break;
     case 3:
@@ -100,7 +112,7 @@ void choose_action_list(selected_list* sl)
     case 4:
         return;
     }
-    press_enter_to_continue(error_code);
+    press_any_key_to_continue(error_code);
 }
 
 void open_list(selected_list* sl)
@@ -136,9 +148,12 @@ void open_list(selected_list* sl)
         switch (select) {
         case 1:
             if (!check_action("create_task")) {
+                printf("\nInput task:\n");
                 sl->name_task[152] = '~';
                 fgets(&sl->name_task[1], 152, stdin);
-                error_code = create_task(sl, list);
+                if ((error_code = create_task(sl, list)) != 0) {
+                    error_output(4, error_code);
+                }
             }
             break;
         case 2:
@@ -152,7 +167,7 @@ void open_list(selected_list* sl)
             fclose(list);
             return;
         }
-        press_enter_to_continue(error_code);
+        press_any_key_to_continue(error_code);
     } while (1);
 }
 
@@ -167,7 +182,9 @@ void select_task(selected_list* sl, FILE* list)
     printf("\nSelect task: ");
     do {
         scanf("%lu", &select);
-        error_code = get_task(select, sl, list);
+        if ((error_code = get_task(select, sl, list)) != 0) {
+            error_output(5, error_code);
+        }
     } while (error_code);
     select = get_number_task_in_file(sl, list, select);
     choose_action_task(sl, list, select);
@@ -195,7 +212,7 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
     switch (select) {
     case 1:
         if (!check_action("delete task")) {
-            error_code = delete_task(sl, list, number_task);
+            delete_task(sl, list, number_task);
         }
         break;
     case 2:
@@ -203,9 +220,12 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
             return;
         }
         if (!check_action("edit task")) {
+            printf("\nInput new task:\n");
             sl->name_task[152] = '~';
             fgets(&sl->name_task[1], 152, stdin);
-            error_code = edit_task(sl, list, number_task);
+            if ((error_code = edit_task(sl, list, number_task)) != 0) {
+                error_output(4, error_code);
+            }
         }
         break;
     case 3:
@@ -215,5 +235,5 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
     case 4:
         return;
     }
-    press_enter_to_continue(error_code);
+    press_any_key_to_continue(error_code);
 }
