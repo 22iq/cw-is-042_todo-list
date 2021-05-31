@@ -174,3 +174,53 @@ CTEST(create_task, ascii_going_out)
     fclose(file);
     remove("test.txt");
 }
+CTEST(edit_task, empty_rename_task)
+{
+    selected_list test;
+    FILE* file = fopen("test.txt", "w+");
+    char test_name_task[2] = "X\n";
+    for (size_t i = 1; i < 153; i++) {
+        test.name_task[i] = '1';
+    }
+
+    strcpy(test.name_task, test_name_task);
+
+    for (size_t i = 1; i <= 3; i++) {
+        fwrite("Xtask", sizeof(char), 5, file);
+        for (size_t j = 1; j <= (151 - 5); j++) {
+            fputc('~', file);
+        }
+    }
+
+    const int expect = 3;
+    const int result = edit_task(&test, file, 1);
+    ASSERT_EQUAL(expect, result);
+    fclose(file);
+    remove("test.txt");
+}
+CTEST(edit_task, ascii_going_out_rename_task)
+{
+    selected_list test;
+    FILE* file = fopen("test.txt", "w+");
+    char test_name_task[190]
+            = "We're no strangers~~~~~~~~ to love You know the rules"
+              "and so do I A full commitment 's what I' m thinking of You\n";
+    for (size_t i = 1; i < 153; i++) {
+        test.name_task[i] = '1';
+    }
+
+    strcpy(test.name_task, test_name_task);
+
+    for (size_t i = 1; i <= 3; i++) {
+        fwrite("Xtask", sizeof(char), 5, file);
+        for (size_t j = 1; j <= (151 - 5); j++) {
+            fputc('~', file);
+        }
+    }
+
+    const int expect = 2;
+    const int result = edit_task(&test, file, 1);
+    ASSERT_EQUAL(expect, result);
+    fclose(file);
+    remove("test.txt");
+}
