@@ -36,7 +36,7 @@ CTEST(search_last_task, test_last_task)
     ASSERT_EQUAL(expect, result);
     fclose(file);
     remove("test.txt");
-} 
+}
 CTEST(get_amount_task, test_amount_task)
 {
     remove("test.txt");
