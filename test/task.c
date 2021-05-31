@@ -37,3 +37,28 @@ CTEST(search_last_task, test_last_task)
     fclose(file);
     remove("test.txt");
 } 
+CTEST(get_amount_task, test_amount_task)
+{
+    remove("test.txt");
+    selected_list sl;
+    const int expect = 5;
+    FILE* file = fopen("test.txt", "w+");
+    for (size_t i = 1; i <= 5; i++) {
+        fwrite("Xtask", sizeof(char), 5, file);
+        for (size_t j = 1; j <= (151 - 5); j++) {
+            fputc('~', file);
+        }
+    }
+    for (size_t i = 1; i <= 3; i++) {
+        fwrite("\0", sizeof(char), 1, file);
+        for (size_t j = 1; j <= (151 - 1); j++) {
+            fputc('~', file);
+        }
+    }
+
+    rewind(file);
+    const int result = get_amount_task(&sl, file);
+    ASSERT_EQUAL(expect, result);
+    fclose(file);
+    remove("test.txt");
+}
