@@ -8,6 +8,7 @@
 #include "get_number_selected_action.h"
 #include "get_task.h"
 #include "name_initialization.h"
+#include "press_any_key.h"
 #include "print_lists.h"
 #include "print_tasks.h"
 #include "rename_list.h"
@@ -23,7 +24,10 @@ void list_menu()
     do {
         system("clear");
 
+        size_t error_code = 0;
+
         print_lists();
+        printf("---------------");
         printf("\n1. Create list\n");
         printf("2. Select list\n");
         printf("3. Exit the program\n\n");
@@ -34,7 +38,7 @@ void list_menu()
         case 1:
             if (!check_action("create list")) {
                 name_initialization(&sl);
-                create_list(&sl);
+                error_code = create_list(&sl);
             }
             break;
         case 2:
@@ -43,6 +47,7 @@ void list_menu()
         case 3:
             return;
         }
+        press_enter_to_continue(error_code);
     } while (1);
 }
 
@@ -51,11 +56,14 @@ void select_list(selected_list* sl)
     system("clear");
 
     size_t select;
+    size_t error_code = 0;
 
     print_lists();
+    printf("\nSelect list: ");
     do {
         scanf("%lu", &select);
-    } while (get_list(select, sl));
+        error_code = get_list(select, sl);
+    } while (error_code);
     choose_action_list(sl);
 }
 
@@ -64,9 +72,10 @@ void choose_action_list(selected_list* sl)
     system("clear");
 
     size_t select;
+    size_t error_code = 0;
     char new_name_file[36];
 
-    // printf selected list
+    print_selected_list(sl);
     printf("1. Delete list\n");
     printf("2. Rename list\n");
     printf("3. Open list\n");
@@ -77,12 +86,13 @@ void choose_action_list(selected_list* sl)
     switch (select) {
     case 1:
         if (!check_action("delete list")) {
-            delete_list(sl);
+            error_code = delete_list(sl);
         }
         break;
     case 2:
         if (!check_action("rename list")) {
-            rename_list(sl, new_name_initialization(new_name_file));
+            error_code
+                    = rename_list(sl, new_name_initialization(new_name_file));
         }
         break;
     case 3:
@@ -90,6 +100,7 @@ void choose_action_list(selected_list* sl)
     case 4:
         return;
     }
+    press_enter_to_continue(error_code);
 }
 
 void open_list(selected_list* sl)
@@ -107,9 +118,11 @@ void open_list(selected_list* sl)
 
         size_t count = 1;
         size_t list_is_empty = 0;
+        size_t error_code = 0;
 
         print_selected_list(sl);
         print_tasks(sl, list, &list_is_empty);
+        printf("---------------");
         printf("\n%lu. Create task\n", count++);
 
         // unused if todolist is empty
@@ -125,7 +138,7 @@ void open_list(selected_list* sl)
             if (!check_action("create_task")) {
                 sl->name_task[152] = '~';
                 fgets(&sl->name_task[1], 152, stdin);
-                create_task(sl, list);
+                error_code = create_task(sl, list);
             }
             break;
         case 2:
@@ -139,6 +152,7 @@ void open_list(selected_list* sl)
             fclose(list);
             return;
         }
+        press_enter_to_continue(error_code);
     } while (1);
 }
 
@@ -147,11 +161,14 @@ void select_task(selected_list* sl, FILE* list)
     system("clear");
 
     size_t select;
+    size_t error_code = 0;
 
     print_tasks(sl, list, false);
+    printf("\nSelect task: ");
     do {
         scanf("%lu", &select);
-    } while (get_task(select, sl, list));
+        error_code = get_task(select, sl, list);
+    } while (error_code);
     select = get_number_task_in_file(sl, list, select);
     choose_action_task(sl, list, select);
 }
@@ -161,6 +178,7 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
     system("clear");
 
     size_t select, count = 1;
+    size_t error_code = 0;
 
     print_selected_task(sl);
     printf("%lu. Delete task\n", count++);
@@ -177,7 +195,7 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
     switch (select) {
     case 1:
         if (!check_action("delete task")) {
-            delete_task(sl, list, number_task);
+            error_code = delete_task(sl, list, number_task);
         }
         break;
     case 2:
@@ -187,7 +205,7 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
         if (!check_action("edit task")) {
             sl->name_task[152] = '~';
             fgets(&sl->name_task[1], 152, stdin);
-            edit_task(sl, list, number_task);
+            error_code = edit_task(sl, list, number_task);
         }
         break;
     case 3:
@@ -197,4 +215,5 @@ void choose_action_task(selected_list* sl, FILE* list, size_t number_task)
     case 4:
         return;
     }
+    press_enter_to_continue(error_code);
 }
