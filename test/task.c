@@ -113,3 +113,64 @@ CTEST(get_number_task_in_file, test_get_number_task_in_file)
     fclose(file);
     remove("test.txt");
 }
+CTEST(create_task, number_of_symbols_is_not_correct)
+{
+    //я знаю, что тестирование ситуации с переполнением бесмысленно, так как
+    //из-за гетчар, оно устраняет проблему, но всё же, пусть будет
+    selected_list test;
+    FILE* file = fopen("test.txt", "w+");
+    char test_name_task[190]
+            = "Pour up (Drank), head shot (Drank)Sit down(Drank),stand "
+              "up(Drank) Pass out(Drank), wake up(Drank) "
+              "Faded(Drank),faded(Drank) Now I done grew up round some people "
+              "livin their life in\0 ";
+    test_name_task[0] = 'X';
+    for (size_t i = 1; i < 153; i++) {
+        test.name_task[i] = '1';
+    }
+
+    strcpy(test.name_task, test_name_task);
+    const int expect = 0;
+
+    const int result = create_task(&test, file);
+    ASSERT_EQUAL(expect, result);
+    fclose(file);
+    remove("test.txt");
+}
+CTEST(create_task, empty_create_task_situation)
+{
+    selected_list test;
+    FILE* file = fopen("test.txt", "w+");
+    char test_name_task[2] = "X\n";
+    for (size_t i = 0; i < 153; i++) {
+        test.name_task[i] = '1';
+    }
+
+    strcpy(test.name_task, test_name_task);
+    const int expect = 3;
+
+    const int result = create_task(&test, file);
+    ASSERT_EQUAL(expect, result);
+    fclose(file);
+    remove("test.txt");
+}
+CTEST(create_task, ascii_going_out)
+{
+    selected_list test;
+    FILE* file = fopen("test.txt", "w+");
+    char test_name_task[190]
+            = "Wise men spea~~~~~~~~~k because they have something to say; "
+              "fools because~~~~ they have to say something.\0 ";
+    test_name_task[0] = 'X';
+    for (size_t i = 1; i < 153; i++) {
+        test.name_task[i] = '1';
+    }
+
+    strcpy(test.name_task, test_name_task);
+    const int expect = 2;
+
+    const int result = create_task(&test, file);
+    ASSERT_EQUAL(expect, result);
+    fclose(file);
+    remove("test.txt");
+}
