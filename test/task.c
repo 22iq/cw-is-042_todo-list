@@ -62,3 +62,22 @@ CTEST(get_amount_task, test_amount_task)
     fclose(file);
     remove("test.txt");
 }
+CTEST(delete_task, test_delete_task)
+{
+    selected_list sl;
+    FILE* file = fopen("test.txt", "w+");
+    for (size_t i = 1; i <= 3; i++) {
+        fwrite("Xtask", sizeof(char), 5, file);
+        for (size_t j = 1; j <= (151 - 5); j++) {
+            fputc('~', file);
+        }
+    }
+
+    rewind(file);
+    delete_task(&sl, file, 2);
+    fseek(file, 151, SEEK_SET);
+    const char result = fgetc(file);
+    ASSERT_EQUAL('\0', result);
+    fclose(file);
+    remove("test.txt");
+}
