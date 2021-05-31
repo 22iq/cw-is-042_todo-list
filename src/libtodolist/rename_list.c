@@ -13,7 +13,7 @@ int rename_list(selected_list* v, char* newnamefile)
     if ((newnamefile[31] == '\0') && (newnamefile[30] != '\n')) {
         return 1;
     }
-    if (v->name_list[31] == '\n') {
+    if (newnamefile[0] == '\n') {
         return 6;
     }
 

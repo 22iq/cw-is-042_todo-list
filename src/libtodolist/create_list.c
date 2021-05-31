@@ -14,7 +14,7 @@ int create_list(selected_list* v)
     if ((v->name_list[31] == '\0') && (v->name_list[30] != '\n')) {
         return 1;
     }
-    if (v->name_list[31] == '\n') {
+    if (v->name_list[0] == '\n') {
         return 6;
     }
 

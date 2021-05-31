@@ -21,6 +21,7 @@ void error_output(size_t func, size_t error_code)
             break;
         case 5:
             printf("\nError: The main list cannot be renamed");
+            break;
         case 6:
             printf("\nError: Empty list name");
         }
