@@ -10,8 +10,12 @@ int create_list(selected_list* v)
 
     //Ввод названия файла
 
+    // if ((v->name_list[31] == '\0') && (v->name_list[30] != '\n')) {
     if ((v->name_list[31] == '\0') && (v->name_list[30] != '\n')) {
         return 1;
+    }
+    if (v->name_list[31] == '\n') {
+        return 6;
     }
 
     //Проверка
@@ -72,3 +76,4 @@ int create_list(selected_list* v)
 // return 2 - Недопустимое значение символов
 // return 3 - Недопустимое название файла
 // return 4 - Такой файл существует
+// return 6 - Название пустое

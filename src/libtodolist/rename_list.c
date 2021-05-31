@@ -10,12 +10,25 @@ int rename_list(selected_list* v, char* newnamefile)
     char oldnamefile[45] = "./lists/";
     char wayfile[45] = "./lists/";
 
-    if (strcmp(v->name_list, "Default.txt") == 0) {
-        return 5;
-    }
-
     if ((newnamefile[31] == '\0') && (newnamefile[30] != '\n')) {
         return 1;
+    }
+    if (v->name_list[31] == '\n') {
+        return 6;
+    }
+
+    //Проверка
+    for (size_t i = 0; i < 31; i++) {
+        if (newnamefile[i] == '\n') {
+            newnamefile[i] = '\0';
+        }
+        if ((newnamefile[i] >= 'A' && newnamefile[i] <= 'Z')
+            || (newnamefile[i] >= 'a' && newnamefile[i] <= 'z')
+            || (newnamefile[i] >= '0' && newnamefile[i] <= '9')
+            || (newnamefile[i] == '\0') || (newnamefile[i] == ' ')) {
+        } else {
+            return 2;
+        }
     }
 
     if ((strcmp(newnamefile, "PRN") == 0) || (strcmp(newnamefile, "AUX") == 0)
@@ -37,23 +50,14 @@ int rename_list(selected_list* v, char* newnamefile)
         || (strcmp(newnamefile, "LPT6") == 0)
         || (strcmp(newnamefile, "LPT7") == 0)
         || (strcmp(newnamefile, "LPT8") == 0)
-        || (strcmp(newnamefile, "LPT9") == 0)
-        || (strcmp(newnamefile, "Default") == 0)) {
+        || (strcmp(newnamefile, "LPT9") == 0)) {
         return 3;
     }
-    //Проверка
-    for (size_t i = 0; i < 31; i++) {
-        if (newnamefile[i] == '\n') {
-            newnamefile[i] = '\0';
-        }
-        if ((newnamefile[i] >= 'A' && newnamefile[i] <= 'Z')
-            || (newnamefile[i] >= 'a' && newnamefile[i] <= 'z')
-            || (newnamefile[i] >= '0' && newnamefile[i] <= '9')
-            || (newnamefile[i] >= '\0')) {
-        } else {
-            return 2;
-        }
+
+    if (strcmp(v->name_list, "Default.txt") == 0) {
+        return 5;
     }
+
     strcat(newnamefile, txt_file);
     strcat(wayfile, newnamefile);
     //Проверка ниличия файла
@@ -75,3 +79,4 @@ int rename_list(selected_list* v, char* newnamefile)
 // return 3 - Недопустимое название файла
 // return 4 - Такой файл существует
 // return 5 - Этот файл нельзя удалить
+// return 6 - Название пустое
