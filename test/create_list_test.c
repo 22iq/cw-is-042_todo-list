@@ -1,6 +1,7 @@
 #include <ctest.h>
 #include <libtodolist/create_list.h>
 #include <libtodolist/selected_list_type.h>
+#include <stdio.h>
 #include <string.h>
 
 CTEST(create_list, correct_input_with_valid_characters)
@@ -33,6 +34,8 @@ CTEST(create_list, correct_input_in_capital_letters)
 
     const int result = create_list(&test);
     ASSERT_EQUAL(expect, result);
+
+    remove("./lists/FILE.txt");
 }
 
 CTEST(create_list, correct_input_in_small_letters)
@@ -49,6 +52,8 @@ CTEST(create_list, correct_input_in_small_letters)
 
     const int result = create_list(&test);
     ASSERT_EQUAL(expect, result);
+
+    remove("./lists/files.txt");
 }
 
 CTEST(create_list, incorrect_input_with_large_number_of_characters)
